@@ -1,0 +1,14 @@
+.container {
+    margin-top: 100px;
+}
+.center-col {
+    margin: auto;
+}
+
+.header {
+    text-align: center;
+}
+
+.header-row {
+    margin-bottom: 50px;
+}
