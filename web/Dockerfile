@@ -11,5 +11,6 @@ COPY . /app
 WORKDIR /app
 # Run models.py to build tables, also adds some basic data to the database
 
-CMD ["python", "models.py"]
+#RUN python models.py
+#CMD ["python", "models.py"]
 CMD ["gunicorn", "-w 4", "-b 0.0.0.0:80", "main:app"]

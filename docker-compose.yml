@@ -1,12 +1,25 @@
-version: '2'
+version: '3'
 services:
 
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:8080"
+    environment:
+      - API_HOST=api
+      - API_PORT=43434
+    depends_on:
+      - api
   api:
     build: ./web
     ports:
       - "43434:80"
     depends_on:
       - db
+      - redis
+    environment:
+      - DB_HOST=db
+      - REDIS_HOST=redis
   db:
     image: postgres:11.2
     ports:

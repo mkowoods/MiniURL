@@ -12,16 +12,22 @@ import redis
 import json
 import logging
 import time
+import os
 
+
+#used in place of url for lookups that have no results
+REDIS_NULL_TOKEN = 'NULL_TOKEN'
 REDIS_ALL_URLS_CACHE_KEY = 'all_urls'
 
-DB_HOST = 'db'
+DB_HOST = os.environ['DB_HOST']
+REDIS_HOST = os.environ['REDIS_HOST']
+
+print('DB_HOST', DB_HOST, 'REDIS_HOST', REDIS_HOST)
 
 conn_string = 'postgresql://postgres:example@{host}/postgres'.format(host=DB_HOST)
 engine = create_engine(conn_string, echo=True)
 
-
-r = redis.Redis(host='redis', port=6379, db=0)
+r = redis.Redis(host=REDIS_HOST, port=6379, db=0)
 
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
@@ -59,16 +65,25 @@ def get_all_urls():
         return results
 
 def get_by_key(key):
+
     cache_key = 'key:{key}'.format(key=key)
     if r.exists(cache_key):
+        print("#######################")
         print('Hit Cache')
-        return r.get(cache_key)
+        url = r.get(cache_key).decode('utf-8')
+        if url == REDIS_NULL_TOKEN:
+            return None
+        return url
     else:
+        print("#######################")
+        print("Hitting Database")
         session = Session()
         u = session.query(URL).get(key)
         session.close()
         url = u.url if u else None
-        r.set(cache_key, url)
+        if url is None:
+            print('Test ULR', url)
+            r.set(cache_key, REDIS_NULL_TOKEN)
         return url
 
 def safe_commit(session):
@@ -93,7 +108,7 @@ def add_url(url):
     r.set(cache_key, url)
     r.delete(REDIS_ALL_URLS_CACHE_KEY)
     time.sleep(0.1) #sleep to avoid race condition
-    return get_by_key(key)
+    return {'tag': key, 'url': url}
 
 def delete_by_key(key):
     session = Session()
@@ -103,19 +118,28 @@ def delete_by_key(key):
     return key
 
 
-if __name__ == "__main__":
-
+def create_tables():
     Base.metadata.create_all(engine)
-    Session = sessionmaker(bind=engine)
-    session = Session()
 
-    tmp = URL(key="tmp", url="https://www.google.com")
-    tmp2 = URL(key="tmp2", url="https://www.amazon.com")
-    session.add_all([tmp, tmp2])
-    print(session.new)
+    try:
+        Session = sessionmaker(bind=engine)
+        session = Session()
 
-    session.commit()
+        if not session.query(URL).get('tmp'):
+            print("\n", "############################", "\n")
+            print('Seeding tables')
+            print("\n", "############################", "\n")
 
-    print("\n", "Query all of URL Database")
-    for row in session.query(URL).all():
-        print(row)
+            tmp = URL(key="tmp", url="https://www.google.com")
+            tmp2 = URL(key="tmp2", url="https://www.amazon.com")
+            session.add_all([tmp, tmp2])
+            print(session.new)
+
+            session.commit()
+
+            print("\n", "Query all of URL Database")
+            for row in session.query(URL).all():
+                print(row)
+
+    except:
+        pass

@@ -2,32 +2,70 @@
 <html lang="en">
 
 <head>
-    <title>About Sharks</title>
+    <title>MiniURL</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="/css/styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,700" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div class="container">
-        <div class="row header-row">
-            <div class="col-8 center-col">
-                <h1 class="center-col header">MiniURL</h1>
-            </div>
+<div class="container">
+    <div class="row header-row">
+        <div class="col-8 center-col">
+            <h1 class="center-col header">MiniURL</h1>
         </div>
-        <div class="row">
-            <div class="col-8 center-col">
-                <div class="input-group input-group-lg">
-                  <div class="input-group-prepend">
+    </div>
+    <div class="row">
+        <div class="col-8 center-col">
+            <div class="input-group input-group-lg">
+                <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-lg">Enter URL:</span>
-                  </div>
-                  <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
                 </div>
-                <div>
-                <div class="alert alert-success" role="alert">Your: Minified URL</div>
+                <input id="url-input" type="text" class="form-control" aria-label="Large"
+                       aria-describedby="inputGroup-sizing-sm">
+                <div class="input-group-append">
+                    <button id="post-url" class="btn btn-outline-primary" type="button">Button</button>
                 </div>
+            </div>
+            <div>
+                <div id="resp" class="alert alert-success" role="alert">Your: Minified URL</div>
             </div>
         </div>
     </div>
+</div>
+<!--    <script src="/js/app.js"/>-->
+<script>
+    const URL = 'http://127.0.0.1:8080'
+    console.log('In JS directory ')
+    const onClick = (e) => {
+        const input = document.getElementById("url-input");
+        if (input.value) {
+            fetch("/create_tag", {
+                method: 'POST',
+                body: JSON.stringify({url: input.value}),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(resp => resp.json())
+                .then(json => {
+                    const shortLink = `${URL}/${json.tag}`
+                    const el = document.getElementById("resp");
+
+                    el.innerHTML = `<a href="${shortLink}" target="_blank" >${shortLink}</a>`
+                })
+        }
+
+    }
+
+    const tmp = (id) => {
+        const el = document.getElementById(id)
+        el.addEventListener("click", onClick)
+    }
+
+
+    tmp("post-url")
+</script>
 </body>

@@ -8,8 +8,8 @@ Demos integration of `flask`, `postgres` and `redis`
 
 ### Running:
 ```
-docker-compose up --build -d    # Run the container
-docker-compose down   # Stop and shutdown
+docker-compose up --build -d --remove-orphans   # Run the container
+docker-compose down -v --remove-orphans  # Stop and shutdown
 ``` 
 
 The site will be available to you at `localhost:43434`
@@ -21,7 +21,7 @@ The site will be available to you at `localhost:43434`
  - Configure Master/Slave Database for postgres and process all reads on the slave 
  - Need to attach database to volume
  - Add frontend JS Service
- 
+ - Add URL Validation 
  
 #### Access psql in postgres
 `docker-compose run db psql -h db -U postgres -d postgres`
