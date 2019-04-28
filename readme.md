@@ -4,7 +4,7 @@
 
 URL Shortening Application Using Docker Compose.
 
-Demos integration of `flask`, `postgres` and `redis` 
+Demos integration of `node/express`, `flask`, `postgres` and `redis` 
 
 ### Running:
 ```
