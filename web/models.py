@@ -21,10 +21,11 @@ REDIS_ALL_URLS_CACHE_KEY = 'all_urls'
 
 DB_HOST = os.environ['DB_HOST']
 REDIS_HOST = os.environ['REDIS_HOST']
+POSTGRES_PASSWORD = os.environ['POSTGRES_PASSWORD']
 
 print('DB_HOST', DB_HOST, 'REDIS_HOST', REDIS_HOST)
 
-conn_string = 'postgresql://postgres:example@{host}/postgres'.format(host=DB_HOST)
+conn_string = 'postgresql://postgres:{postgres_password}@{host}/postgres'.format(host=DB_HOST, postgres_password=POSTGRES_PASSWORD)
 engine = create_engine(conn_string, echo=True)
 
 r = redis.Redis(host=REDIS_HOST, port=6379, db=0)

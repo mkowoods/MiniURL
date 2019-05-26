@@ -20,6 +20,7 @@ services:
     environment:
       - DB_HOST=db
       - REDIS_HOST=redis
+      - POSTGRES_PASSWORD=example
   db:
     image: postgres:11.2
     ports:
