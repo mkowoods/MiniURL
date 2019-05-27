@@ -37,7 +37,8 @@
 </div>
 <!--    <script src="/js/app.js"/>-->
 <script>
-    const URL = 'http://127.0.0.1:8080'
+    const HOST = window.location.hostname
+    const PORT = window.location.port
     console.log('In JS directory ')
     const onClick = (e) => {
         const input = document.getElementById("url-input");
@@ -51,7 +52,7 @@
             })
                 .then(resp => resp.json())
                 .then(json => {
-                    const shortLink = `${URL}/${json.tag}`
+                    const shortLink = `http://${HOST}:${PORT}/${json.tag}`
                     const el = document.getElementById("resp");
 
                     el.innerHTML = `<a href="${shortLink}" target="_blank" >${shortLink}</a>`
