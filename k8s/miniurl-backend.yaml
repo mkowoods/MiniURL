@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: miniurl-backend
+  labels:
+    app: miniurl-backend
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      # targetPort: 43434
+  selector:
+    app: miniurl-backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: miniurl-backend
+  labels:
+    app: miniurl-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: miniurl-backend
+  template:
+    metadata:
+      labels:
+        app: miniurl-backend
+    spec:
+      containers:
+        - image: mkowoods/miniurl-backend:0.1.0
+          name: miniurl-backend
+          ports:
+            - containerPort: 80
+              name: miniurl-backend
+              environment:
+          env:
+          - name: DB_HOST
+            value: postgres
+          - name: REDIS_HOST
+            value: redis
+          - name: POSTGRES_PASSWORD
+            value: example
+
