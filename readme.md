@@ -3,7 +3,7 @@
 ----
 
 Yet another URL Shortening Application.
-The application has deployments in both docker-compose and kubernetes, this was built mostly to learn the different methods for deploying applications.
+The application has deployments in both `docker-compose` and `kubernetes`, this was built mostly to learn the different methods for deploying application clusters.
 
 Also, demos integration of `node/express` (Client), `flask` (API), `postgres` (Persistence Layer) and `redis` (Cache Layer) 
 
