@@ -1,30 +1,30 @@
-### MiniURL
+# MiniURL
 
 ----
 
-URL Shortening Application Using Docker Compose.
+Yet another URL Shortening Application.
+The application has deployments in both docker-compose and kubernetes, this was built mostly to learn the different methods for deploying applications.
 
-Demos integration of `node/express`, `flask`, `postgres` and `redis` 
+Also, demos integration of `node/express` (Client), `flask` (API), `postgres` (Persistence Layer) and `redis` (Cache Layer) 
 
-### Running:
+## Docker Deployment:
 ```
 docker-compose up --build -d --remove-orphans   # Run the container
 docker-compose down -v --remove-orphans  # Stop and shutdown
 ``` 
-
-The site will be available to you at `localhost:43434`
+## Kubernetes Deployment:
+```
+kubectl apply -f ./k8s/postgres-volumeclaim.yaml
+kubectl apply -f ./k8s/postgres.yaml
+kubectl apply -f ./k8s/redis.yaml
+kubectl apply -f ./k8s/miniurl-backend.yaml
+kubectl apply -f ./k8s/miniurl-frontend.yaml
 
 
 ### TODO:
- - Add Logging to standard out from the app
- - Add Test Cases for the app
  - Configure Master/Slave Database for postgres and process all reads on the slave 
- - Need to attach database to volume
- - Add frontend JS Service
- - Add URL Validation 
+ - Need to attach database to volume in docker-compose
  
-#### Access psql in postgres
-`docker-compose run db psql -h db -U postgres -d postgres`
 
 
 #### Good References 
