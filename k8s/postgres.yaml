@@ -33,13 +33,14 @@ spec:
           env:
             - name: POSTGRES_PASSWORD
               value: example
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
           ports:
             - containerPort: 5432
               name: postgres
           volumeMounts:
             - name: postgres-persistent-storage
               mountPath: /var/lib/postgresql/data
-              subPath: postgres #Need to mount /data directory and can't use root of disk: https://stackoverflow.com/a/51174380
       volumes:
         - name: postgres-persistent-storage
           persistentVolumeClaim:
