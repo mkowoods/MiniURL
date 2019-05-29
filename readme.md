@@ -19,7 +19,7 @@ kubectl apply -f ./k8s/postgres.yaml
 kubectl apply -f ./k8s/redis.yaml
 kubectl apply -f ./k8s/miniurl-backend.yaml
 kubectl apply -f ./k8s/miniurl-frontend.yaml
-
+```
 
 ### TODO:
  - Configure Master/Slave Database for postgres and process all reads on the slave 
