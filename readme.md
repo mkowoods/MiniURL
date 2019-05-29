@@ -16,7 +16,11 @@ docker-compose down -v --remove-orphans  # Stop and shutdown
 ```
 kubectl apply -f ./k8s/postgres-volumeclaim.yaml
 kubectl apply -f ./k8s/postgres.yaml
+kubectl rollout status -f ./k8s/postgres.yaml
+
 kubectl apply -f ./k8s/redis.yaml
+kubectl rollout status -f ./k8s/redis.yaml
+
 kubectl apply -f ./k8s/miniurl-backend.yaml
 kubectl apply -f ./k8s/miniurl-frontend.yaml
 ```
