@@ -8,7 +8,6 @@ spec:
   type: NodePort
   ports:
     - port: 80
-      # targetPort: 43434
   selector:
     app: miniurl-backend
 ---
@@ -29,7 +28,7 @@ spec:
         app: miniurl-backend
     spec:
       containers:
-        - image: mkowoods/miniurl-backend:0.1.0
+        - image: mkowoods/miniurl-backend:0.1.1
           name: miniurl-backend
           ports:
             - containerPort: 80

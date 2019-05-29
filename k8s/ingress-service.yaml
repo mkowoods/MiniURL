@@ -1,0 +1,17 @@
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: miniurl-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      # - path: /backend/*
+      #   backend:
+      #     serviceName: miniurl-backend
+      #     servicePort: 80
+      - path: /*
+        backend:
+          serviceName: miniurl-frontend
+          servicePort: 80

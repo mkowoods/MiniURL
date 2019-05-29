@@ -6,10 +6,9 @@ metadata:
     app: miniurl-frontend
 spec:
   type: NodePort
-  # type: ClusterIP
   ports:
-    - port: 8080
-      # targetPort: 81
+    - port: 80
+      targetPort: 8080
   selector:
     app: miniurl-frontend
 ---

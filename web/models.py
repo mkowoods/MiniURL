@@ -19,9 +19,9 @@ import os
 REDIS_NULL_TOKEN = 'NULL_TOKEN'
 REDIS_ALL_URLS_CACHE_KEY = 'all_urls'
 
-DB_HOST = os.environ['DB_HOST']
-REDIS_HOST = os.environ['REDIS_HOST']
-POSTGRES_PASSWORD = os.environ['POSTGRES_PASSWORD']
+DB_HOST = os.environ.get('DB_HOST', 'NA')
+REDIS_HOST = os.environ.get('REDIS_HOST', 'NA')
+POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', 'NA')
 
 print('DB_HOST', DB_HOST, 'REDIS_HOST', REDIS_HOST)
 

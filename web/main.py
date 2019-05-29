@@ -2,7 +2,6 @@ from flask import Flask, redirect
 from flask_restful import Resource, Api, reqparse
 
 import models
-
 models.create_tables()
 
 app = Flask(__name__)
@@ -10,6 +9,10 @@ api = Api(app)
 
 parser = reqparse.RequestParser()
 parser.add_argument('url')
+
+class HealthCheck(Resource):
+    def get(self):
+        return {'status': 'ok'}
 
 class HelloWorld(Resource):
     def get(self):
@@ -40,7 +43,7 @@ class URLList(Resource):
         url = args['url']
         return models.add_url(url)
 
-
+api.add_resource(HealthCheck, '/')
 api.add_resource(HelloWorld, '/api/test')
 api.add_resource(URLList, '/api/urls')
 api.add_resource(URL, '/api/<string:key>')
