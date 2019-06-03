@@ -25,11 +25,6 @@ kubectl apply -f ./k8s/miniurl-backend.yaml
 kubectl apply -f ./k8s/miniurl-frontend.yaml
 ```
 
-### TODO:
- - Configure Master/Slave Database for postgres and process all reads on the slave 
- - Need to attach database to volume in docker-compose
- 
-
 
 #### Good References 
  - https://blog.realkinetic.com/building-minimal-docker-containers-for-python-applications-37d0272c52f3
